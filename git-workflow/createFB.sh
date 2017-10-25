@@ -4,10 +4,10 @@
 
 BRANCH=select-picture-microblog
 ISSUE=SWF-3961
-ORIGIN_BRANCH=develop
+ORIGIN_BRANCH=feature/enterprise-skin
 TARGET_BRANCH=feature/$BRANCH
-ORIGIN_VERSION=5.0.x-SNAPSHOT
-TARGET_VERSION=5.0.x-$BRANCH-SNAPSHOT
+ORIGIN_VERSION=1.0.x-enterprise-skin-SNAPSHOT
+TARGET_VERSION=1.0.x-$BRANCH-SNAPSHOT
 # Maven DEPMGT
 DEPMGT_ORIGIN_VERSION=13-SNAPSHOT
 DEPMGT_TARGET_VERSION=13.x-$BRANCH-SNAPSHOT
@@ -64,6 +64,7 @@ function repoCleanup() {
   else
     printf "\e[1;35m# %s\e[m\n" "WARNING : the ${TARGET_BRANCH} branch already exists so we will delete it (you have 5 seconds to cancel with CTRL+C) ($repo_name) ..."
     sleep 5
+exit 1
     git checkout $ORIGIN_BRANCH
     git branch -D $TARGET_BRANCH
     git checkout -b $TARGET_BRANCH
@@ -150,42 +151,42 @@ function createFB(){
   
   printf "\e[1;33m# %s\e[m\n" "Commiting and pushing the new $TARGET_BRANCH branch to origin ($repo_name) ..."
   git commit -m "$ISSUE: Create FB $BRANCH and update projects versions/dependencies" -a
-  git push $GIT_PUSH_PARAMS origin $TARGET_BRANCH --set-upstream
-  git checkout develop
+  #git push $GIT_PUSH_PARAMS origin $TARGET_BRANCH --set-upstream
+  #git checkout develop
   popd
 }
 
 pushd ${SWF_FB_REPOS}
 
-createFB gatein-dep
-createFB gatein-wci
-createFB kernel
-createFB core
-createFB ws
-createFB jcr
-createFB gatein-pc
-createFB gatein-sso
-createFB gatein-portal
-createFB maven-depmgt-pom
-createFB docs-style
-createFB platform-ui
-createFB commons
-createFB social
-createFB ecms
-createFB wiki
-createFB forum
-createFB calendar
-createFB integration
-createFB platform
+#createFB gatein-dep
+#createFB gatein-wci
+#createFB kernel
+#createFB core
+#createFB ws
+#createFB jcr
+#createFB gatein-pc
+#createFB gatein-sso
+#createFB gatein-portal
+#createFB maven-depmgt-pom
+#createFB docs-style
+#createFB platform-ui
+#createFB commons
+#createFB social
+#createFB ecms
+#createFB wiki
+#createFB forum
+#createFB calendar
+#createFB integration
+#createFB platform
 
-createFB answers
-createFB chat-application
-createFB task
-createFB remote-edit
-createFB wcm-template-pack
+#createFB answers
+#createFB chat-application
+#createFB task
+#createFB remote-edit
+#createFB wcm-template-pack
 
-createFB platform-public-distributions
-createFB platform-private-distributions
-createFB platform-private-trial-distributions
-
+#createFB platform-public-distributions
+#createFB platform-private-distributions
+#createFB platform-private-trial-distributions
+createFB enterprise-skin
 popd
