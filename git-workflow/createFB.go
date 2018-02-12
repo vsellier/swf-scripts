@@ -31,6 +31,7 @@ type Project struct {
 	Labels               string  `json:"labels"`
 	MavenVersionProperty string  `json:"maven_property_version"`
 	Release              Release `json:"release"`
+	GitUrl               string  `json:"gitUrl"`
 }
 
 type Release struct {
@@ -59,7 +60,12 @@ func getProjectInCatalog(n string) (Project, error) {
 }
 
 func getRepository(p Project) (*git.Repository, error) {
-	gitUrl := gitUrl + ":" + p.Organization + "/" + p.Name
+	var gitUrl string
+	if p.GitUrl != "" {
+		gitUrl = p.GitUrl
+	} else {
+		gitUrl := gitUrl + ":" + p.Organization + "/" + p.Name
+	}
 	dir := args.WorkDir + "/" + p.Organization + "/" + p.Name
 
 	log.WithFields(log.Fields{
@@ -75,7 +81,7 @@ func getRepository(p Project) (*git.Repository, error) {
 	log.Info("Opening repository on ", dir)
 	r, err := git.PlainOpen(dir)
 	if err != nil {
-		log.WithField("error", err).Info("Error open ", dir, ", Try to clean and clone it")
+		log.WithField("error", err).Info("Error opening ", dir, ", Try to clean and clone it")
 		os.Remove(dir)
 
 		r, err = git.PlainClone(dir, false, &git.CloneOptions{
